@@ -10,8 +10,10 @@ ARG EXTRA_LIBS
 # Add extra libraries (VC/TTS)
 
 RUN if [ ${EXTRA_LIBS} = true ]; then \
-        cd /espnet/tools; \
-        make extra; \
+    cd /espnet/tools; \
+    . ./activate_python.sh; \
+    pip install parallel_wavegan; \
+    pip install scipy==1.10.0; \
     fi
 
 # Add user to container

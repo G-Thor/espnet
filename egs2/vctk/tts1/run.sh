@@ -22,8 +22,11 @@ train_set=tr_no_dev
 valid_set=dev
 test_sets="dev eval1"
 
-train_config=conf/train.yaml
-inference_config=conf/decode.yaml
+# train_config=conf/train.yaml
+train_config=conf/tuning/train_xvector_tacotron2.yaml
+# inference_config=conf/decode.yaml
+inference_config=conf/tuning/decode_tacotron2.yaml
+inference_args="--vocoder_tag=parallel_wavegan/vctk_style_melgan.v1"
 
 # g2p=g2p_en # Include word separator
 g2p=g2p_en_no_space # Include no word separator
@@ -44,4 +47,7 @@ g2p=g2p_en_no_space # Include no word separator
     --valid_set "${valid_set}" \
     --test_sets "${test_sets}" \
     --srctexts "data/${train_set}/text" \
+    --use_spk_embed true \
+    --inference_args "${inference_args}" \
+    --stage 2 \
     ${opts} "$@"
