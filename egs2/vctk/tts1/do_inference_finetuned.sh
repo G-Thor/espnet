@@ -3,14 +3,14 @@
 . utils/parse_options.sh
 for ep in 1 2 3 4 5 6 7 8 9 10; do
         python3 -m espnet2.bin.tts_inference \
-                --ngpu 1 \
-                --data_path_and_name_and_type dump/raw/my_eval_set/text,text,text \
-                --data_path_and_name_and_type dump/raw/my_eval_set/wav.scp,speech,sound \
+                --ngpu 0 \
+                --data_path_and_name_and_type dump/raw/my_eval_set_phn/text,text,text \
+                --data_path_and_name_and_type dump/raw/my_eval_set_phn/wav.scp,speech,sound \
                 --model_file exp/tts_finetune_phn/${ep}epoch.pth \
                 --train_config exp/tts_finetune_phn/config.yaml \
                 --output_dir finetuned_outputs/${ep}epoch \
                 --vocoder_file none \
-                --data_path_and_name_and_type dump/espnet_spk/my_eval_set/espnet_spk.scp,spembs,kaldi_ark \
+                --data_path_and_name_and_type dump/espnet_spk/my_eval_set_phn/espnet_spk.scp,spembs,kaldi_ark \
                 --config conf/tuning/decode_tacotron2.yaml \
                 --vocoder_tag parallel_wavegan/vctk_hifigan.v1
 done
