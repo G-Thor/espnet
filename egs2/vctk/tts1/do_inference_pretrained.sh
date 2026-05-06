@@ -1,6 +1,6 @@
-. path.sh
-. cmd.sh
-. utils/parse_options.sh
+. ./path.sh
+. ./cmd.sh
+. ./utils/parse_options.sh
 
 python3 -m espnet2.bin.tts_inference \
         --ngpu 0 \

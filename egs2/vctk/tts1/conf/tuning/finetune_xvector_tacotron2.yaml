@@ -33,7 +33,7 @@ tts_conf:                        # keyword arguments for the selected model
     use_residual: false          # whether to use residual connection in encoder
     spk_embed_dim: 192           # dimension of speaker embedding
     spk_embed_integration_type: concat # how to integrate speaker embedding
-    dropout_rate: 0.5            # dropout rate
+    dropout_rate: 0.2            # dropout rate
     zoneout_rate: 0.1            # zoneout rate
     reduction_factor: 1          # reduction factor
     use_masking: true            # whether to apply masking for padded part in loss calculation
@@ -42,19 +42,22 @@ tts_conf:                        # keyword arguments for the selected model
     guided_attn_loss_sigma: 0.4  # sigma of guided attention loss
     guided_attn_loss_lambda: 1.0 # strength of guided attention loss
 
+freeze_param:
+    - tts.enc # we freeze the encoder during fine tuning so we don't unlearn phoneme coarticulation
+
 ##########################################################
 #                  OPTIMIZER SETTING                     #
 ##########################################################
 optim: adam           # optimizer type
 optim_conf:           # keyword arguments for selected optimizer
-    lr: 1.0e-04       # learning rate
+    lr: 1.0e-05       # learning rate
     eps: 1.0e-06      # epsilon
     weight_decay: 0.0 # weight decay coefficient
 
 ##########################################################
 #                OTHER TRAINING SETTING                  #
 ##########################################################
-num_iters_per_epoch: 100    # number of iters per epoch
+num_iters_per_epoch: 50    # number of iters per epoch
 max_epoch: 10              # number of epochs
 grad_clip: 1.0              # gradient clipping norm
 grad_noise: false           # whether to use gradient noise injection
