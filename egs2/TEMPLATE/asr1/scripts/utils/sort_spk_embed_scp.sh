@@ -26,11 +26,9 @@ for scp in "${dumpdir}/${tag}"/*/"${tag}.scp"; do
   dset=$(basename "$(dirname "$scp")")
 
   # Train/val live under raw/org, tests under raw/
-  if [[ "$dset" == "train" || "$dset" == "val" ]]; then
-    rawdir="${dumpdir}/raw/org/${dset}"
-  else
-    rawdir="${dumpdir}/raw/${dset}"
-  fi
+  # Try raw/org first, fall back to raw/ if it doesn't exist
+  rawdir="${dumpdir}/raw/org/${dset}"
+  [[ -d "$rawdir" ]] || rawdir="${dumpdir}/raw/${dset}"
 
   ids="${rawdir}/text"
   [[ -f "$ids" ]] || { echo "Missing $ids"; exit 1; }
